@@ -1,5 +1,5 @@
 ---
-nom: "Prénom Nom"
-role: "Secrétaire"
+nom: Pierre Tournier
+role: Secrétaire
 ordre: 3
 ---
