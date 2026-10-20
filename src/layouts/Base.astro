@@ -28,13 +28,16 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
   </head>
   <body>
     <a class="skip" href="#contenu">Aller au contenu</a>
     <header class="site-header">
       <div class="wrap header-in">
-        <a class="logo" href="/"><span class="logo-r5">5</span><span>{site.nom}</span></a>
+        <a class="logo" href="/" aria-label={`${site.nom} — accueil`}>
+          <img class="logo-img" src="/images/logo-air-5.jpg" alt="" width="56" height="56" />
+          <span>{site.nom}</span>
+        </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu" />
         <label for="menu-toggle" class="burger" aria-hidden="true"><span></span></label>
         <nav aria-label="Navigation principale">
