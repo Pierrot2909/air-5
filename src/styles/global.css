@@ -39,6 +39,10 @@ nav a.btn{background:var(--accent);color:#fff}
 .hero.has-img{background-size:cover;background-position:center}
 .hero.has-img::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,33,58,.92),rgba(22,33,58,.45))}
 .hero .wrap{position:relative}
+.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:2.5rem;align-items:center}
+.hero-photo{margin:0}
+.hero-photo img{width:100%;height:auto;border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr}}
 .hero h1{color:#fff;max-width:18ch}
 .hero p{max-width:55ch;font-size:1.15rem;color:#dfe5f2}
 .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:.8rem 1.4rem;border-radius:999px;border:0;cursor:pointer}
