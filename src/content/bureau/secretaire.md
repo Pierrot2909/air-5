@@ -1,5 +1,5 @@
 ---
 nom: Pierre Tournier
 role: Secrétaire
-ordre: 3
+ordre: 4
 ---
