@@ -1,0 +1,158 @@
+# ─────────────────────────────────────────────────────────────
+#  Backoffice du site (Decap CMS) — accessible sur /admin
+#  1) Remplacer "VOTRE-COMPTE/VOTRE-DEPOT" par le dépôt GitHub du site
+#  2) Voir le README.md pour l'activation de l'authentification
+# ─────────────────────────────────────────────────────────────
+backend:
+  name: github
+  repo: Pierrot2909/air-5
+  branch: main
+  base_url: https://api.netlify.com   # authentification GitHub via Netlify (gratuit)
+
+# Pour tester en local : lancer "npx decap-server" puis "npm run dev"
+local_backend: true
+
+locale: fr
+site_url: https://www.air-5.fr
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  # ── Véhicules des adhérents ──────────────────────────────
+  - name: vehicules
+    label: "Fiches véhicules"
+    label_singular: "fiche véhicule"
+    folder: src/content/vehicules
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    summary: "{{title}} — {{modele}}"
+    fields:
+      - { label: "Titre de la fiche", name: title, widget: string, hint: "Ex. : R5 Turbo 2 de Paul" }
+      - label: "Modèle"
+        name: modele
+        widget: select
+        options:
+          - "R5 (première génération)"
+          - "R5 Alpine / Alpine Turbo"
+          - "R5 Turbo / Turbo 2"
+          - "R5 Gordini"
+          - "Supercinq"
+          - "Autre dérivé"
+      - { label: "Année", name: annee, widget: number, value_type: int, required: false }
+      - { label: "Motorisation", name: motorisation, widget: string, required: false }
+      - { label: "Couleur", name: couleur, widget: string, required: false }
+      - { label: "Propriétaire", name: proprietaire, widget: string, required: false }
+      - { label: "Ville / département", name: ville, widget: string, required: false }
+      - { label: "Photo principale", name: photo, widget: image, required: false }
+      - label: "Galerie photos"
+        name: galerie
+        widget: list
+        required: false
+        field: { label: Photo, name: image, widget: image }
+      - { label: "Histoire du véhicule", name: body, widget: markdown }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
+  # ── Documentation technique ──────────────────────────────
+  - name: documents
+    label: "Documentation technique"
+    label_singular: "document"
+    folder: src/content/documents
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    media_folder: /public/documents
+    public_folder: /documents
+    summary: "{{categorie}} — {{title}}"
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - label: "Catégorie"
+        name: categorie
+        widget: select
+        options: ["Manuels d'atelier", "Électricité", "Moteur et boîte", "Carrosserie", "Châssis et freinage", "Pièces et fournisseurs", "Divers"]
+      - { label: "Description courte", name: description, widget: text, required: false }
+      - { label: "Fichier à télécharger (PDF...)", name: fichier, widget: file, required: false }
+      - { label: "OU lien externe", name: lien, widget: string, required: false }
+      - { label: "Contenu (article)", name: body, widget: markdown, required: false }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
+  # ── Rencontres et sorties ────────────────────────────────
+  - name: sorties
+    label: "Rencontres et sorties"
+    label_singular: "événement"
+    folder: src/content/sorties
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    sortable_fields: ["date", "title"]
+    summary: "{{date}} — {{title}}"
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Type", name: type, widget: select, options: ["Rencontre", "Sortie", "Salon", "Assemblée générale", "Autre"], default: "Sortie" }
+      - { label: "Date et heure de début", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Date de fin (si plusieurs jours)", name: date_fin, widget: datetime, required: false, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Lieu", name: lieu, widget: string }
+      - { label: "Image", name: image, widget: image, required: false }
+      - { label: "Lien d'inscription", name: inscription_url, widget: string, required: false }
+      - { label: "Programme / détails", name: body, widget: markdown }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
+  # ── Pages libres ─────────────────────────────────────────
+  - name: pages
+    label: "Pages libres"
+    label_singular: "page"
+    folder: src/content/pages
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    description: "Créez de nouvelles pages (ex. : liens utiles, boutique, partenaires). Évitez les titres : Adhésion, Association, Documentation, Sorties, Véhicules."
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Description (SEO)", name: description, widget: text, required: false }
+      - { label: "Afficher dans le menu", name: afficher_menu, widget: boolean, default: false }
+      - { label: "Position dans le menu (petit = à gauche)", name: ordre_menu, widget: number, value_type: int, default: 50 }
+      - { label: "Contenu", name: body, widget: markdown }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
+  # ── Association et bureau ────────────────────────────────
+  - name: bureau
+    label: "Membres du bureau"
+    label_singular: "membre"
+    folder: src/content/bureau
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    summary: "{{ordre}} — {{role}} : {{nom}}"
+    fields:
+      - { label: "Nom", name: nom, widget: string }
+      - { label: "Fonction", name: role, widget: string, hint: "Président, Trésorier, Secrétaire..." }
+      - { label: "Ordre d'affichage", name: ordre, widget: number, value_type: int, default: 10 }
+      - { label: "Photo", name: photo, widget: image, required: false }
+
+  # ── Réglages et textes uniques ───────────────────────────
+  - name: reglages
+    label: "Réglages du site"
+    files:
+      - label: "Informations générales, accueil et adhésion"
+        name: site
+        file: src/data/site.json
+        fields:
+          - { label: "Nom du club", name: nom, widget: string }
+          - { label: "Slogan", name: slogan, widget: string }
+          - { label: "E-mail de contact", name: email, widget: string }
+          - { label: "Adresse postale", name: adresse, widget: string }
+          - { label: "Page Facebook (URL)", name: facebook, widget: string, required: false }
+          - { label: "Compte Instagram (URL)", name: instagram, widget: string, required: false }
+          - { label: "Accueil : titre", name: hero_titre, widget: string }
+          - { label: "Accueil : texte", name: hero_texte, widget: text }
+          - { label: "Accueil : image de fond", name: hero_image, widget: image, required: false }
+          - { label: "Adhésion : lien de paiement (HelloAsso, Stripe...)", name: adhesion_url, widget: string }
+          - { label: "Adhésion : montant de la cotisation", name: cotisation, widget: string }
+          - { label: "Adhésion : texte de présentation", name: adhesion_texte, widget: text }
+      - label: "Présentation de l'association"
+        name: association
+        file: src/content/association/presentation.md
+        fields:
+          - { label: "Titre", name: title, widget: string }
+          - { label: "Image", name: image, widget: image, required: false }
+          - { label: "Texte", name: body, widget: markdown }

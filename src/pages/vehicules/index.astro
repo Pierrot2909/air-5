@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import VehicleCard from '../../components/VehicleCard.astro';
+import { getCollection } from 'astro:content';
+const vehicules = (await getCollection('vehicules', (v) => v.data.publie))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'fr'));
+const modeles = [...new Set(vehicules.map((v) => v.data.modele))].sort();
+---
+<Base title="Nos Renault 5" description="Les fiches des véhicules des adhérents : Renault 5, Alpine, Turbo, GT Turbo, Supercinq.">
+  <div class="wrap page-head">
+    <h1>Les autos des adhérents</h1>
+    <p class="muted">{vehicules.length} véhicule{vehicules.length > 1 ? 's' : ''} présenté{vehicules.length > 1 ? 's' : ''} par les membres du club.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filtrer par modèle">
+      <button type="button" data-f="" aria-pressed="true">Tous</button>
+      {modeles.map((m) => <button type="button" data-f={m} aria-pressed="false">{m}</button>)}
+    </div>
+    <div class="grid" id="list">
+      {vehicules.map((v) => <div data-modele={v.data.modele}><VehicleCard v={v} /></div>)}
+    </div>
+  </div>
+  <script is:inline>
+    var btns = document.querySelectorAll('#filters button');
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+        document.querySelectorAll('#list > div').forEach(function (c) {
+          c.hidden = b.dataset.f && c.dataset.modele !== b.dataset.f;
+        });
+      });
+    });
+  </script>
+</Base>

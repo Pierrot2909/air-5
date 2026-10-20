@@ -1,0 +1,18 @@
+---
+const { s } = Astro.props;
+const d = s.data.date;
+const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeZone: 'Europe/Paris' });
+const hasTime = d.getUTCHours() !== 0 || d.getUTCMinutes() !== 0;
+const heure = hasTime ? new Intl.DateTimeFormat('fr-FR', { timeStyle: 'short', timeZone: 'Europe/Paris' }).format(d) : '';
+---
+<article class="sortie" data-date={d.toISOString()} data-fin={(s.data.date_fin ?? d).toISOString()}>
+  <div class="sortie-date">
+    <span class="jour">{new Intl.DateTimeFormat('fr-FR', { day: '2-digit', timeZone: 'Europe/Paris' }).format(d)}</span>
+    <span class="mois">{new Intl.DateTimeFormat('fr-FR', { month: 'short', timeZone: 'Europe/Paris' }).format(d)}</span>
+  </div>
+  <div>
+    <span class="tag">{s.data.type}</span>
+    <h3><a href={`/sorties/${s.slug}`}>{s.data.title}</a></h3>
+    <p class="muted">{fmt.format(d)}{heure && ` à ${heure}`} — {s.data.lieu}</p>
+  </div>
+</article>

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+const paras = site.adhesion_texte.split(/\n\s*\n/);
+---
+<Base title="Devenir membre" description="Adhérez au club et réglez votre cotisation en ligne.">
+  <div class="wrap page-head">
+    <h1>Devenir membre</h1>
+    <div class="fiche">
+      <div class="prose">{paras.map((p) => <p>{p}</p>)}</div>
+      <div class="cta-box">
+        <h2>Cotisation annuelle</h2>
+        <div class="price">{site.cotisation}</div>
+        <p>Paiement en ligne sécurisé</p>
+        <a class="btn" href={site.adhesion_url} rel="noopener">Adhérer et payer ma cotisation</a>
+      </div>
+    </div>
+  </div>
+</Base>

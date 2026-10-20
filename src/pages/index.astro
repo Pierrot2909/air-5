@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import SortieCard from '../components/SortieCard.astro';
+import site from '../data/site.json';
+import { getCollection } from 'astro:content';
+
+const vehicules = (await getCollection('vehicules', (v) => v.data.publie)).slice(0, 4);
+const sorties = (await getCollection('sorties', (s) => s.data.publie))
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+<Base>
+  <section class={`hero ${site.hero_image ? 'has-img' : ''}`} style={site.hero_image ? `background-image:url('${site.hero_image}')` : undefined}>
+    <div class="wrap">
+      <h1>{site.hero_titre}</h1>
+      <p>{site.hero_texte}</p>
+      <div class="hero-actions">
+        <a class="btn" href="/adhesion">Devenir membre</a>
+        <a class="btn btn-ghost" href="/vehicules">Découvrir nos autos</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head"><h2 style="margin:0">Prochains rendez-vous</h2><a href="/sorties">Tout le calendrier →</a></div>
+    <div id="next" style="margin-top:1.2rem">
+      {sorties.map((s) => <SortieCard s={s} />)}
+    </div>
+    <p id="next-empty" class="muted" hidden>Aucun rendez-vous programmé pour le moment.</p>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head"><h2 style="margin:0">Les autos des adhérents</h2><a href="/vehicules">Voir toutes les fiches →</a></div>
+    <div class="grid" style="margin-top:1.2rem">
+      {vehicules.map((v) => <VehicleCard v={v} />)}
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="cta-box">
+      <h2>Rejoignez le club</h2>
+      <p>Cotisation annuelle : <strong>{site.cotisation}</strong></p>
+      <a class="btn" href="/adhesion">Adhérer en ligne</a>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var now = Date.now(), box = document.getElementById('next');
+      var items = Array.from(box.children), shown = 0;
+      items.forEach(function (el) {
+        var end = new Date(el.dataset.fin).getTime() + 24 * 3600 * 1000;
+        if (end < now || shown >= 3) el.remove(); else shown++;
+      });
+      if (!shown) document.getElementById('next-empty').hidden = false;
+    })();
+  </script>
+</Base>

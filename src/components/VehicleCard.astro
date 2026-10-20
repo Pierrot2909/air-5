@@ -1,0 +1,11 @@
+---
+const { v } = Astro.props;
+---
+<a class="card" href={`/vehicules/${v.slug}`}>
+  <img src={v.data.photo || '/images/placeholder.svg'} alt={v.data.title} loading="lazy" />
+  <div class="card-body">
+    <span class="tag">{v.data.modele}</span>
+    <h3>{v.data.title}</h3>
+    <p class="muted">{[v.data.annee, v.data.couleur, v.data.ville].filter(Boolean).join(' · ')}</p>
+  </div>
+</a>

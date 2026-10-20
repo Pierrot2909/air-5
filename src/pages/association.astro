@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, getEntry } from 'astro:content';
+const presentation = await getEntry('association', 'presentation');
+const { Content } = await presentation.render();
+const bureau = (await getCollection('bureau')).sort((a, b) => a.data.ordre - b.data.ordre);
+const initiales = (n) => n.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+---
+<Base title="L'association" description="Présentation de l'association et des membres du bureau.">
+  <div class="wrap page-head">
+    <h1>{presentation.data.title}</h1>
+    {presentation.data.image && <img src={presentation.data.image} alt="" style="border-radius:14px;max-width:760px;width:100%" />}
+    <div class="prose"><Content /></div>
+    <h2>Le bureau</h2>
+    <div class="team">
+      {bureau.map((m) => (
+        <div class="member">
+          {m.data.photo ? <img src={m.data.photo} alt={m.data.nom} /> : <div class="avatar">{initiales(m.data.nom)}</div>}
+          <h3>{m.data.nom}</h3>
+          <span class="tag">{m.data.role}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</Base>

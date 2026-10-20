@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const docs = (await getCollection('documents', (d) => d.data.publie));
+const cats = [...new Set(docs.map((d) => d.data.categorie))].sort((a, b) => a.localeCompare(b, 'fr'));
+---
+<Base title="Documentation technique" description="Documentation technique Renault 5 et Supercinq : manuels d'atelier, schémas électriques, notices, conseils.">
+  <div class="wrap page-head">
+    <h1>Documentation technique</h1>
+    <p class="muted">Manuels, schémas, notices et fiches pratiques pour entretenir et restaurer votre Renault 5.</p>
+    {cats.map((c) => (
+      <section>
+        <h2>{c}</h2>
+        <ul class="doc-list">
+          {docs.filter((d) => d.data.categorie === c).sort((a, b) => a.data.title.localeCompare(b.data.title, 'fr')).map((d) => (
+            <li class="doc">
+              <div>
+                <h3>{d.data.title}</h3>
+                {d.data.description && <p class="muted">{d.data.description}</p>}
+              </div>
+              {d.data.fichier
+                ? <a class="btn btn-small" href={d.data.fichier} download>Télécharger</a>
+                : d.data.lien
+                  ? <a class="btn btn-small" href={d.data.lien} rel="noopener">Consulter</a>
+                  : <a class="btn btn-small" href={`/documentation/${d.slug}`}>Lire</a>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>

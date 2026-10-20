@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const all = await getCollection('sorties', (s) => s.data.publie);
+  return all.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const { Content } = await s.render();
+const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeZone: 'Europe/Paris' });
+const hasTime = s.data.date.getUTCHours() !== 0 || s.data.date.getUTCMinutes() !== 0;
+const heure = hasTime ? new Intl.DateTimeFormat('fr-FR', { timeStyle: 'short', timeZone: 'Europe/Paris' }).format(s.data.date) : '';
+---
+<Base title={s.data.title}>
+  <div class="wrap page-head">
+    <p><a href="/sorties">← Rencontres &amp; sorties</a></p>
+    <span class="tag">{s.data.type}</span>
+    <h1>{s.data.title}</h1>
+    <p class="muted">{fmt.format(s.data.date)}{heure && ` à ${heure}`}{s.data.date_fin && ` → ${fmt.format(s.data.date_fin)}`}<br />{s.data.lieu}</p>
+    {s.data.image && <img src={s.data.image} alt="" style="border-radius:14px;max-width:760px;width:100%" />}
+    <div class="prose"><Content /></div>
+    {s.data.inscription_url && <p><a class="btn" href={s.data.inscription_url} rel="noopener">S'inscrire</a></p>}
+  </div>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const all = await getCollection('vehicules', (v) => v.data.publie);
+  return all.map((v) => ({ params: { slug: v.slug }, props: { v } }));
+}
+const { v } = Astro.props;
+const { Content } = await v.render();
+const d = v.data;
+const rows = [['Modèle', d.modele], ['Année', d.annee], ['Motorisation', d.motorisation], ['Couleur', d.couleur], ['Propriétaire', d.proprietaire], ['Localisation', d.ville]].filter(([, val]) => val);
+---
+<Base title={d.title} description={`${d.title} — ${d.modele}`}>
+  <div class="wrap page-head">
+    <p><a href="/vehicules">← Toutes les fiches</a></p>
+    <h1>{d.title}</h1>
+    <div class="fiche">
+      <div>
+        <img src={d.photo || '/images/placeholder.svg'} alt={d.title} style="border-radius:14px;width:100%" />
+        <div class="prose" style="margin-top:1.2rem"><Content /></div>
+        {d.galerie && d.galerie.length > 0 && (
+          <div class="gallery">{d.galerie.map((g) => <img src={g} alt="" loading="lazy" />)}</div>
+        )}
+      </div>
+      <aside class="panel">
+        <h2 style="margin-top:0">Fiche technique</h2>
+        <dl>{rows.map(([k, val]) => (<><dt>{k}</dt><dd>{val}</dd></>))}</dl>
+      </aside>
+    </div>
+  </div>
+</Base>

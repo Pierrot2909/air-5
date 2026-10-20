@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const all = await getCollection('pages', (p) => p.data.publie);
+  return all.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const { Content } = await p.render();
+---
+<Base title={p.data.title} description={p.data.description}>
+  <div class="wrap page-head">
+    <h1>{p.data.title}</h1>
+    <div class="prose"><Content /></div>
+  </div>
+</Base>
