@@ -11,13 +11,18 @@ const sorties = (await getCollection('sorties', (s) => s.data.publie))
 ---
 <Base>
   <section class={`hero ${site.hero_image ? 'has-img' : ''}`} style={site.hero_image ? `background-image:url('${site.hero_image}')` : undefined}>
-    <div class="wrap">
-      <h1>{site.hero_titre}</h1>
-      <p>{site.hero_texte}</p>
-      <div class="hero-actions">
-        <a class="btn" href="/adhesion">Devenir membre</a>
-        <a class="btn btn-ghost" href="/vehicules">Découvrir nos autos</a>
+    <div class="wrap hero-grid">
+      <div>
+        <h1>{site.hero_titre}</h1>
+        <p>{site.hero_texte}</p>
+        <div class="hero-actions">
+          <a class="btn" href="/adhesion">Devenir membre</a>
+          <a class="btn btn-ghost" href="/vehicules">Découvrir nos autos</a>
+        </div>
       </div>
+      <figure class="hero-photo">
+        <img src="/images/hero-r5.jpg" alt="Renault 5 orange devant un bâtiment moderniste" width="900" height="599" />
+      </figure>
     </div>
   </section>
 
