@@ -1,5 +1,5 @@
 ---
-nom: "Prénom Nom"
-role: "Président"
+nom: N/A
+role: Président
 ordre: 1
 ---
