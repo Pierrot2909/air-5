@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import SortieCard from '../../components/SortieCard.astro';
+import { getCollection } from 'astro:content';
+const all = (await getCollection('sorties', (s) => s.data.publie))
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+<Base title="Rencontres et sorties" description="Calendrier des rencontres, balades et salons du club.">
+  <div class="wrap page-head">
+    <div class="titre-img">
+      <img src="/images/sorties-illustration.jpg" alt="" width="88" height="88" />
+      <h1>Rencontres &amp; sorties</h1>
+    </div>
+    <p class="muted">Balades, rassemblements et salons : retrouvez tous les rendez-vous du club.</p>
+    <h2>À venir</h2>
+    <div id="upcoming">{all.map((s) => <SortieCard s={s} />)}</div>
+    <p id="upcoming-empty" class="muted" hidden>Aucun rendez-vous programmé pour le moment.</p>
+    <h2>Passées</h2>
+    <div id="past" class="past"></div>
+  </div>
+  <script is:inline>
+    (function () {
+      var now = Date.now(), up = document.getElementById('upcoming'), past = document.getElementById('past');
+      Array.from(up.children).forEach(function (el) {
+        var end = new Date(el.dataset.fin).getTime() + 24 * 3600 * 1000;
+        if (end < now) past.insertBefore(el, past.firstChild);
+      });
+      if (!up.children.length) document.getElementById('upcoming-empty').hidden = false;
+    })();
+  </script>
+</Base>
+<style>
+  .titre-img{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}
+  .titre-img img{width:88px;height:88px;border-radius:14px;object-fit:cover;flex:none}
+  .titre-img h1{margin:0}
+</style>
