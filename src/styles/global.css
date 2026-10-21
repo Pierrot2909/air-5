@@ -72,6 +72,9 @@ nav a.btn{background:var(--accent);color:#fff}
 .prose img{border-radius:var(--radius);margin:1.2rem 0}
 .prose li{margin:.25rem 0}
 .panel{background:var(--paper);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.6rem}
+.titre-img{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}
+.titre-img img{width:88px;height:88px;border-radius:14px;object-fit:cover;flex:none}
+.titre-img h1{margin:0}
 .fiche{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:start}
 @media(max-width:800px){.fiche{grid-template-columns:1fr}}
 .fiche dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;margin:0}
