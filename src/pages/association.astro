@@ -8,10 +8,10 @@ const initiales = (n) => n.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').to
 ---
 <Base title="L'association" description="Présentation de l'association et des membres du bureau.">
   <div class="wrap page-head">
-    <h1 class="titre-logo">
-      <img src="/images/logo-air-5.jpg" alt="" class="titre-logo-img" width="78" height="78" />
-      {presentation.data.title}
-    </h1>
+   <div class="titre-img">
+    <img src="/images/logo-air-5.jpg" alt="" width="88" height="88" />
+    <h1>{presentation.data.title}</h1>
+   </div>
     {presentation.data.image && <img src={presentation.data.image} alt="" style="border-radius:14px;max-width:760px;width:100%" />}
     <div class="prose"><Content /></div>
     <h2>Le bureau</h2>
@@ -26,3 +26,8 @@ const initiales = (n) => n.split(/\s+/).map((p) => p[0]).slice(0, 2).join('').to
     </div>
   </div>
 </Base>
+<style>
+  .titre-img{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem}
+  .titre-img img{width:88px;height:88px;border-radius:14px;object-fit:cover;flex:none}
+  .titre-img h1{margin:0}
+</style>
