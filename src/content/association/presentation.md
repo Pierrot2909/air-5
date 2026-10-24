@@ -1,7 +1,7 @@
 ---
 title: L'association
 ---
-**Air-5** est une association loi 1901 qui réunit les passionnés de **Renault 5**, de ses dérivés (Renault Siete, Rodeo 5 ...) et de la **Supercinq**.
+**Air-5**  (Association Internationale Renault 5) est une association loi 1901 créée en 2010 qui réunit les passionnés de **Renault 5**, de ses dérivés (Renault Siete, Rodeo 5 ...) et de la **Supercinq**.
 
 ## Nos missions
 
