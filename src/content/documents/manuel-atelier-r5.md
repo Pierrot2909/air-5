@@ -1,7 +1,7 @@
 ---
-title: "Manuel d'atelier Renault 5 (exemple)"
-categorie: "Manuels d'atelier"
-description: "Exemple de fiche : remplacez-la en déposant votre propre PDF depuis le backoffice."
+title: Sites de documentation sur la R5 et la Supercinq
+categorie: Manuels d'atelier
+description: Annuaire de sites internet proposant de la documentation sur la Renault 5
 publie: true
 ---
-Cette fiche est un exemple. Ajoutez un fichier PDF depuis le backoffice pour qu'un bouton de téléchargement apparaisse.
+Le Forum Renault5 : https://renault5.forumactif.com/
