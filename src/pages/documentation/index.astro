@@ -4,13 +4,13 @@ import { getCollection } from 'astro:content';
 const docs = (await getCollection('documents', (d) => d.data.publie));
 const cats = [...new Set(docs.map((d) => d.data.categorie))].sort((a, b) => a.localeCompare(b, 'fr'));
 ---
-<Base title="Documentation technique" description="Documentation technique Renault 5 et Supercinq : manuels d'atelier, schémas électriques, notices, conseils.">
+<Base title="Documentation et sites internet utiles et de pièces" description="Documentation technique Renault 5 et Supercinq : manuels , sites de pièces, conseils.">
   <div class="wrap page-head">
     <div class="titre-img">
       <img src="/images/atelier-illustration.jpg" alt="" width="88" height="88" />
       <h1>Documentation technique</h1>
     </div>
-    <p class="muted">Manuels, schémas, notices et fiches pratiques pour entretenir et restaurer votre Renault 5.</p>
+    <p class="muted">Documentation technique Renault 5 et Supercinq : manuels , sites de pièces, conseils. Tout pour entretenir ou restaurer votre Renault 5 ou votre Supercinq.</p>
     {cats.map((c) => (
       <section>
         <h2>{c}</h2>
