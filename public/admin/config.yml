@@ -33,12 +33,11 @@ collections:
         name: modele
         widget: select
         options:
-          - "R5 (première génération)"
-          - "R5 Alpine / Alpine Turbo"
-          - "R5 Turbo / Turbo 2"
-          - "R5 Gordini"
-          - "Supercinq"
-          - "Autre dérivé"
+          - "R5 Phase 1 (1972-1979)"
+          - "R5 Phase 2 (1980-1984)"
+          - "Supercinq Phase 1 (1984-1987)"
+          - "Supercinq Phase 2 (1998-1996)"
+          - "Autre dérivé (Renault Siete, Rodeo 5 ...)"
       - { label: "Année", name: annee, widget: number, value_type: int, required: false }
       - { label: "Motorisation", name: motorisation, widget: string, required: false }
       - { label: "Couleur", name: couleur, widget: string, required: false }
@@ -69,7 +68,7 @@ collections:
       - label: "Catégorie"
         name: categorie
         widget: select
-        options: ["Manuels d'atelier", "Électricité", "Moteur et boîte", "Carrosserie", "Châssis et freinage", "Pièces et fournisseurs", "Divers"]
+        options: ["Sites de documentation", "Forums utiles", "Sites de pièces modernes", "Sites de pièces anciennes", "Partenaires Air-5", "Divers"]
       - { label: "Description courte", name: description, widget: text, required: false }
       - { label: "Fichier à télécharger (PDF...)", name: fichier, widget: file, required: false }
       - { label: "OU lien externe", name: lien, widget: string, required: false }
