@@ -7,8 +7,11 @@ const cats = [...new Set(annonces.map((a) => a.data.categorie))].sort((a, b) => 
 const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
 ---
 <Base title="Petites annonces" description="Pièces, véhicules et recherches : les petites annonces des adhérents.">
-  <div class="wrap page-head">
-    <h1>Petites annonces</h1>
+     <div class="wrap page-head">
+        <div class="titre-img">
+      <img src="/images/annonces.jpg" alt="" width="88" height="88" />
+      <h1>Petites annonces</h1>
+    </div>
     <p class="muted">Pièces, véhicules, recherches : les annonces déposées par les adhérents.</p>
     <div class="filters" id="filters" role="group" aria-label="Filtrer par catégorie">
       <button type="button" data-f="" aria-pressed="true">Toutes</button>
