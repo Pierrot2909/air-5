@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const annonces = (await getCollection('annonces', (a) => a.data.publie))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const cats = [...new Set(annonces.map((a) => a.data.categorie))].sort((a, b) => a.localeCompare(b, 'fr'));
+const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
+---
+<Base title="Petites annonces" description="Pièces, véhicules et recherches : les petites annonces des adhérents.">
+  <div class="wrap page-head">
+    <h1>Petites annonces</h1>
+    <p class="muted">Pièces, véhicules, recherches : les annonces déposées par les adhérents.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filtrer par catégorie">
+      <button type="button" data-f="" aria-pressed="true">Toutes</button>
+      {cats.map((c) => <button type="button" data-f={c} aria-pressed="false">{c}</button>)}
+    </div>
+    <div class="grid" id="list">
+      {annonces.map((a) => (
+        <div data-cat={a.data.categorie} data-expire={a.data.date_expiration ? a.data.date_expiration.toISOString() : ''}>
+          <a class="card" href={`/annonces/${a.slug}`}>
+            <img src={a.data.photo || '/images/placeholder.svg'} alt={a.data.title} loading="lazy" />
+            <div class="card-body">
+              <span class="tag">{a.data.categorie}</span>
+              <h3>{a.data.title}</h3>
+              <p class="muted">{[a.data.prix, a.data.ville].filter(Boolean).join(' · ')}</p>
+              <p class="muted">Publiée le {fmt.format(a.data.date)}</p>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+    <p id="empty" class="muted" hidden>Aucune annonce pour le moment.</p>
+  </div>
+  <script is:inline>
+    (function () {
+      var now = Date.now(), list = document.getElementById('list');
+      Array.from(list.children).forEach(function (el) {
+        if (el.dataset.expire && new Date(el.dataset.expire).getTime() + 24 * 3600 * 1000 < now) el.remove();
+      });
+      var empty = document.getElementById('empty');
+      function check() {
+        empty.hidden = Array.from(list.children).some(function (c) { return !c.hidden; });
+      }
+      var btns = document.querySelectorAll('#filters button');
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+          Array.from(list.children).forEach(function (c) {
+            c.hidden = !!b.dataset.f && c.dataset.cat !== b.dataset.f;
+          });
+          check();
+        });
+      });
+      check();
+    })();
+  </script>
+</Base>

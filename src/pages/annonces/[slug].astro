@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const all = await getCollection('annonces', (a) => a.data.publie);
+  return all.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const { Content } = await a.render();
+const d = a.data;
+const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
+const estMail = d.contact.includes('@');
+const rows = [
+  ['Catégorie', d.categorie],
+  ['Prix', d.prix],
+  ['Localisation', d.ville],
+  ['Publiée le', fmt.format(d.date)],
+  ["Valable jusqu'au", d.date_expiration ? fmt.format(d.date_expiration) : ''],
+].filter(([, v]) => v);
+---
+<Base title={d.title} description={`${d.categorie} — ${d.title}`}>
+  <div class="wrap page-head">
+    <p><a href="/annonces">← Toutes les annonces</a></p>
+    <span class="tag">{d.categorie}</span>
+    <h1>{d.title}</h1>
+    <div class="fiche">
+      <div>
+        <img src={d.photo || '/images/placeholder.svg'} alt={d.title} style="border-radius:14px;width:100%" />
+        <div class="prose" style="margin-top:1.2rem"><Content /></div>
+        {d.galerie && d.galerie.length > 0 && (
+          <div class="gallery">{d.galerie.map((g) => <img src={g} alt="" loading="lazy" />)}</div>
+        )}
+      </div>
+      <aside class="panel">
+        <h2 style="margin-top:0">L'annonce</h2>
+        <dl>{rows.map(([k, val]) => (<><dt>{k}</dt><dd>{val}</dd></>))}</dl>
+        <p style="margin-top:1.2rem"><strong>Contact :</strong><br />
+          {estMail ? <a href={`mailto:${d.contact}`}>{d.contact}</a> : d.contact}
+        </p>
+      </aside>
+    </div>
+  </div>
+</Base>
