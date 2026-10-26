@@ -96,6 +96,33 @@ collections:
       - { label: "Programme / détails", name: body, widget: markdown }
       - { label: "Publier", name: publie, widget: boolean, default: true }
 
+  # ── Petites annonces ─────────────────────────────────────
+  - name: annonces
+    label: "Petites annonces"
+    label_singular: "annonce"
+    folder: src/content/annonces
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    sortable_fields: ["date", "title"]
+    summary: "{{date}} — {{categorie}} : {{title}}"
+    fields:
+      - { label: "Titre de l'annonce", name: title, widget: string, hint: "Ex. : Vends calandre R5 Alpine" }
+      - { label: "Catégorie", name: categorie, widget: select, options: ["Vente de pièces", "Vente de véhicule", "Recherche", "Échange", "Divers"], default: "Divers" }
+      - { label: "Date de publication", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Valable jusqu'au (facultatif)", name: date_expiration, widget: datetime, required: false, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm", hint: "Après cette date, l'annonce disparaît de la liste." }
+      - { label: "Prix", name: prix, widget: string, required: false, hint: "Ex. : 150 € ou « à débattre »" }
+      - { label: "Ville / département", name: ville, widget: string, required: false }
+      - { label: "Contact (e-mail ou téléphone)", name: contact, widget: string, hint: "Attention : cette information sera visible publiquement sur le site." }
+      - { label: "Photo principale", name: photo, widget: image, required: false }
+      - label: "Photos supplémentaires"
+        name: galerie
+        widget: list
+        required: false
+        field: { label: Photo, name: image, widget: image }
+      - { label: "Description", name: body, widget: markdown }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
   # ── Pages libres ─────────────────────────────────────────
   - name: pages
     label: "Pages libres"
