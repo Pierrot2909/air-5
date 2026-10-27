@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const all = await getCollection('vehicules', (v) => v.data.publie);
+  return all.map((v) => ({ params: { slug: v.slug }, props: { v } }));
+}
+const { v } = Astro.props;
+const { Content } = await v.render();
+const d = v.data;
+const rows = [
+  ['Modèle', d.modele],
+  ['Année', d.annee],
+  ['Motorisation', d.motorisation],
+  ['Couleur', d.couleur],
+  ['Propriétaire', d.proprietaire],
+  ['Localisation', d.ville],
+].filter(([, val]) => val);
+const chips = [d.annee, d.ville].filter(Boolean);
+---
+<Base title={d.title} description={`${d.title} — ${d.modele}`}>
+  <div class="wrap page-head vehicule">
+    <p class="retour"><a href="/vehicules">← Toutes les fiches</a></p>
+
+    <header class="v-head">
+      <span class="tag">{d.modele}</span>
+      <h1>{d.title}</h1>
+      {chips.length > 0 && (
+        <p class="chips">{chips.map((c) => <span>{c}</span>)}</p>
+      )}
+    </header>
+
+    <div class="v-layout">
+      <div class="v-main">
+        <figure class="v-photo">
+          <img src={d.photo || '/images/placeholder.svg'} alt={d.title} />
+        </figure>
+
+        <section class="v-histoire">
+          <h2>L'histoire de cette auto</h2>
+          <div class="prose"><Content /></div>
+        </section>
+
+        {d.galerie && d.galerie.length > 0 && (
+          <section>
+            <h2>Galerie</h2>
+            <div class="v-gallery">
+              {d.galerie.map((g) => (
+                <a href={g} target="_blank" rel="noopener">
+                  <img src={g} alt={`${d.title} — photo`} loading="lazy" />
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      <aside class="panel v-fiche">
+        <h2>Fiche technique</h2>
+        <dl>
+          {rows.map(([k, val]) => (<><dt>{k}</dt><dd>{val}</dd></>))}
+        </dl>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .retour { margin: 0 0 1rem; }
+  .retour a { text-decoration: none; font-weight: 600; }
+  .retour a:hover { text-decoration: underline; }
+
+  .v-head { margin-bottom: 1.6rem; }
+  .v-head h1 { margin: .5rem 0 .6rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; }
+  .chips span {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: .2rem .8rem;
+    font-size: .9rem;
+    color: var(--muted);
+  }
+
+  .v-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 2.2rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .v-layout { grid-template-columns: 1fr; }
+    .v-fiche { order: -1; }
+  }
+
+  .v-photo { margin: 0; }
+  .v-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 460px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .v-histoire h2, .v-main section > h2 { margin-top: 2rem; }
+  .v-histoire .prose { font-size: 1.05rem; }
+
+  .v-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: .7rem;
+  }
+  .v-gallery img {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .v-gallery a:hover img { transform: scale(1.03); box-shadow: var(--shadow); }
+
+  .v-fiche { position: sticky; top: 84px; }
+  .v-fiche h2 { margin: 0 0 1rem; font-size: 1.3rem; }
+  .v-fiche dl { display: block; margin: 0; }
+  .v-fiche dt {
+    font: 700 .75rem/1 system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin-top: .9rem;
+  }
+  .v-fiche dd {
+    margin: .25rem 0 0;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .v-fiche dd:last-child { border-bottom: 0; padding-bottom: 0; }
+</style>
