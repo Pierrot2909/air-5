@@ -87,5 +87,14 @@ const annonces = defineCollection({
   }),
 });
 
-export const collections = { vehicules, documents, sorties, bureau, pages, association, annonces };
+const breves = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    icone: z.string().optional(),
+    publie: z.boolean().default(true),
+  }),
+});
 
+export const collections = { vehicules, documents, sorties, bureau, pages, association, annonces, breves };
