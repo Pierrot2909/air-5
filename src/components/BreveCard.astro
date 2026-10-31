@@ -1,0 +1,13 @@
+---
+const { b } = Astro.props;
+const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
+const { Content } = await b.render();
+---
+<article class="breve">
+  <img class="breve-icone" src={b.data.icone || '/images/logoAir5.jpg'} alt="" width="64" height="64" loading="lazy" />
+  <div>
+    <h3>{b.data.title}</h3>
+    <p class="muted">Publiée le {fmt.format(b.data.date)}</p>
+    <div class="prose"><Content /></div>
+  </div>
+</article>
