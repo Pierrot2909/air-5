@@ -10,7 +10,7 @@ backend:
   base_url: https://api.netlify.com   # authentification GitHub via Netlify (gratuit)
 
 # Pour tester en local : lancer "npx decap-server" puis "npm run dev"
-local_backend: true
+local_backend: false
 
 locale: fr
 site_url: https://air-5.netlify.app/
