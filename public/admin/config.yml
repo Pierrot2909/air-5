@@ -75,22 +75,23 @@ collections:
       - { label: "Contenu (article)", name: body, widget: markdown, required: false }
       - { label: "Publier", name: publie, widget: boolean, default: true }
 
-      # ── Brèves du club ───────────────────────────────────────
-      - name: breves
-        label: "Brèves du club"
-        label_singular: "brève"
-        folder: src/content/breves
-        create: true
-        slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-        extension: md
-        sortable_fields: ["date", "title"]
-        summary: "{{date}} — {{title}}"
-        fields:
-          - { label: "Titre", name: title, widget: string }
-          - { label: "Date de publication", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
-          - { label: "Icône (petite image carrée)", name: icone, widget: image, required: false }
-          - { label: "Texte", name: body, widget: markdown }
-          - { label: "Publier", name: publie, widget: boolean, default: true }
+  # ── Brèves du club ───────────────────────────────────────
+  - name: breves
+    label: "Brèves du club"
+    label_singular: "brève"
+    folder: src/content/breves
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    sortable_fields: ["date", "title"]
+    summary: "{{date}} — {{title}}"
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Date de publication", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Icône (petite image carrée)", name: icone, widget: image, required: false }
+      - { label: "Texte", name: body, widget: markdown }
+      - { label: "Publier", name: publie, widget: boolean, default: true }
+
 
   # ── Rencontres et sorties ────────────────────────────────
   - name: sorties
