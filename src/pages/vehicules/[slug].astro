@@ -88,9 +88,14 @@ const chips = [d.annee, d.ville].filter(Boolean);
     gap: 2.2rem;
     align-items: start;
   }
+
   @media (max-width: 900px) {
-    .v-layout { grid-template-columns: 1fr; }
-    .v-fiche { order: -1; }
+    .v-layout { grid-template-columns: 1fr; gap: 1.2rem; }
+    .v-main { display: contents; }          /* les enfants rejoignent la grille */
+    .v-photo { order: 1; }
+    .v-fiche { order: 2; position: static; } /* plus de sticky sur mobile */
+    .v-histoire { order: 3; }
+    .v-main > section:not(.v-histoire) { order: 4; } /* galerie en dernier */
   }
 
   .v-photo { margin: 0; }
