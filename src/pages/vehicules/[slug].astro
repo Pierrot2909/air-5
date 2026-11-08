@@ -125,7 +125,9 @@ const chips = [d.annee, d.ville].filter(Boolean);
   }
   .v-gallery a:hover img { transform: scale(1.03); box-shadow: var(--shadow); }
 
-  .v-fiche { position: sticky; top: 84px; }
+   @media (min-width: 901px) {
+    .v-fiche { position: sticky; top: 84px; }
+  }
   .v-fiche h2 { margin: 0 0 1rem; font-size: 1.3rem; }
   .v-fiche dl { display: block; margin: 0; }
   .v-fiche dt {
