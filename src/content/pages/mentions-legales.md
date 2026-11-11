@@ -18,11 +18,9 @@ Le présent site est édité par l'association Club Air-5, association régie pa
 
 • Adresse e-mail : air-5@ymail.com
 
-• Téléphone : \[À compléter si souhaité, facultatif si l'e-mail permet un contact direct et rapide]
-
 **2. Directeur de la publication**
 
-• Directeur de la publication : \[Prénom et Nom du Président]
+• Directeur de la publication : Michel PERRIER par Interim
 
 **3. Hébergement du site**
 
