@@ -15,3 +15,5 @@ Restaurant « Auberge du cheval rouge » 6 place de la Croix blanche 45230 Chati
 12h/14 h déjeuner sur place. 
 
 14 h 30 Départ pour une promenade en R5 et Super5
+
+Voir plus de photos ici : https://flic.kr/s/aHBqjDaor1
