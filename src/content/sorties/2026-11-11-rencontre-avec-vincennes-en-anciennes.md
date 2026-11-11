@@ -6,4 +6,6 @@ lieu: Vincennes
 image: /images/uploads/img_5715.jpg
 publie: true
 ---
-Rencontre sur le parvis du Chateau de Vincennes
+Rencontre sur le parvis du Château de Vincennes puis à Chelles   
+
+Plus de photos ici : https://flic.kr/s/aHBqjDaYvY
