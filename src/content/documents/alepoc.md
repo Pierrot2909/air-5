@@ -1,7 +1,7 @@
 ---
 title: Alepoc
 categorie: Sites de pièces anciennes
-description: Pièces auto pour voitures anciennes
+description: Site qui propose de nombreuses pièces pour voitures anciennes
 lien: https://alepoc.shop/
 publie: true
 ---
