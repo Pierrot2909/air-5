@@ -1,7 +1,7 @@
 ---
 title: La 4L de Sylvie
 categorie: Sites de documentation
-description: ""
+description: Un excellent site avec des tutos sur la 4L adaptables à la R5
 lien: https://www.la4ldesylvie.fr/
 publie: true
 ---
