@@ -3,4 +3,33 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
+
+# ── Site public ─────────────────────────────────────────────
+# img-src autorise les favicons DuckDuckGo (page Documentation).
+# 'unsafe-inline' est nécessaire : scripts is:inline d'Astro et attribut onerror.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https://icons.duckduckgo.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+# ── Backoffice Decap CMS ────────────────────────────────────
+# CSP dédiée : Decap charge son script depuis unpkg et appelle GitHub / Netlify.
+# À vérifier après déploiement avec : curl -I https://air-5.netlify.app/admin/
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "same-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https://api.github.com https://api.netlify.com https://unpkg.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+
+# Les fichiers générés par Astro sont versionnés par hash : cache long.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
