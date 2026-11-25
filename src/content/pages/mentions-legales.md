@@ -54,7 +54,7 @@ Finalités : gestion des adhésions, organisation des rencontres et sorties, pr�
 
 Conservation : les données sont conservées pendant la durée nécessaire à la gestion de la relation associative, puis supprimées sur demande ou après le départ du membre. Les contenus publiés sont retirés sur simple demande.
 
-Vos droits : conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition concernant vos données. Pour l'exercer, contactez l'association par e-mail à l'adresse air-5@ymail.com ou par courrier postal à l'adresse du siège social. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).
+Vos droits : conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition concernant vos données. Pour l'exercer, contactez l'association par e-mail à l'adresse air5@ymail.com ou par courrier postal à l'adresse du siège social. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).
 
 **6. Services tiers et icônes des sites référencés**
 
