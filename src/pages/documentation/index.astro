@@ -1,4 +1,4 @@
----
+  ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 const docs = (await getCollection('documents', (d) => d.data.publie));
@@ -41,11 +41,11 @@ const domaine = (lien) => {
                   {d.data.description && <p class="muted">{d.data.description}</p>}
                 </div>
               </div>
-              {d.data.fichier
-                ? <a class="btn btn-small" href={d.data.fichier} download>Télécharger</a>
-                : d.data.lien
-                  ? <a class="btn btn-small" href={d.data.lien} rel="noopener">Consulter</a>
-                  : <a class="btn btn-small" href={`/documentation/${d.slug}`}>Lire</a>}
+             {d.data.fichier
+              ? <a class="btn btn-small" href={d.data.fichier} download>Télécharger</a>
+              : d.data.lien
+              ? <a class="btn btn-small" href={d.data.lien} target="_blank" rel="noopener noreferrer">Consulter</a>
+              : <a class="btn btn-small" href={`/documentation/${d.slug}`}>Lire</a>}
             </li>
             );
           })}
